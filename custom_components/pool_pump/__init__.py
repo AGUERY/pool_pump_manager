@@ -262,6 +262,11 @@ class PoolPumpManager:
             await self._hass.services.async_call(
                         "homeassistant", SERVICE_TURN_ON, data
             )
+        else:
+             await self._hass.services.async_call(
+                        "homeassistant", SERVICE_TURN_ON, data
+            )
+               
         self._hass.states.async_set(
             "{}.{}".format(DOMAIN, ATTR_TOTAL_DAILY_FILTERING_DURATION),
             format(run_hours_winter, ".2f"),
