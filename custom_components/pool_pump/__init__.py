@@ -125,7 +125,9 @@ async def async_setup(hass: HomeAssistant, config: Config):
             hass.states.async_set(
                 "{}.{}".format(DOMAIN, ATTR_NEXT_RUN_SCHEDULE), "Manual Mode"
             )
-          
+        if mode.state == POOL_PUMP_MODE_HIVER:
+            await manager.winter_mode()
+
 
     hass.services.async_register(DOMAIN, "check", check)
 
