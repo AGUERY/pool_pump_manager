@@ -256,7 +256,8 @@ class PoolPumpManager:
     async def winter_mode(self):
         pool_temp = self._hass.data[DOMAIN][ATTR_POOL_TEMPERATURE_ENTITY_ID] 
         switch_entity_id = self._hass.data[DOMAIN][ATTR_SWITCH_ENTITY_ID] 
-        run_hours_winter = 1.5     
+        run_hours_winter = 1.5 
+        schedule_winter = 0, 0, 0
         if temp < 1.5:
             data = {ATTR_ENTITY_ID: switch_entity_id}
             await self._hass.services.async_call(
@@ -271,4 +272,6 @@ class PoolPumpManager:
             "{}.{}".format(DOMAIN, ATTR_TOTAL_DAILY_FILTERING_DURATION),
             format(run_hours_winter, ".2f"),
         )
+        hass.states.async_set(
+                "{}.{}".format(DOMAIN, ATTR_NEXT_RUN_SCHEDULE), schedule_winter
 
