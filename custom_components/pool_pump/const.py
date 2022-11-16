@@ -13,6 +13,7 @@ ICON = "mdi:format-quote-close"
 
 # Common constants
 POOL_PUMP_MODE_AUTO = "Auto"
+POOL_PUMP_MODE_HIVER = "Hiver"
 ATTR_POOL_PUMP_MODE_ENTITY_ID = "pool_pump_mode_entity_id"
 ATTR_WATER_LEVEL_CRITICAL_ENTITY_ID = "water_level_critical_entity_id"
 
