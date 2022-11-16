@@ -125,6 +125,7 @@ async def async_setup(hass: HomeAssistant, config: Config):
             hass.states.async_set(
                 "{}.{}".format(DOMAIN, ATTR_NEXT_RUN_SCHEDULE), "Manual Mode"
             )
+          
 
     hass.services.async_register(DOMAIN, "check", check)
 
@@ -163,7 +164,7 @@ class PoolPumpManager:
 
     def _build_parameters(self):
         """Build parameters for pool pump manager."""
-        # Compute total duration based on Pool temperature
+        # Compute total duration based on Pool temperature   
         run_hours_total = self._pool_controler.duration(
             float(
                 self._hass.states.get(
@@ -249,3 +250,18 @@ class PoolPumpManager:
                 )
         else:
             _LOGGER.warning("Switch unavailable: %s", switch_entity_id)
+
+    async def winter_mode(self):
+        pool_temp = self._hass.data[DOMAIN][ATTR_POOL_TEMPERATURE_ENTITY_ID] 
+        switch_entity_id = self._hass.data[DOMAIN][ATTR_SWITCH_ENTITY_ID] 
+        run_hours_winter = 1.5     
+        if temp < 1.5:
+            data = {ATTR_ENTITY_ID: switch_entity_id}
+            await self._hass.services.async_call(
+                        "homeassistant", SERVICE_TURN_ON, data
+            )
+        self._hass.states.async_set(
+            "{}.{}".format(DOMAIN, ATTR_TOTAL_DAILY_FILTERING_DURATION),
+            format(run_hours_winter, ".2f"),
+        )
+
